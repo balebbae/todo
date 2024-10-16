@@ -1,6 +1,7 @@
 import { TodoList } from "@/components/todo-list";
 import { Separator } from "@/components/ui/separator";
 import { createClient } from "@/utils/supabase/server";
+import { redirect } from "next/navigation";
 
 export default async function TodosPage() {
   const supabase = await createClient();
@@ -12,8 +13,10 @@ export default async function TodosPage() {
     return redirect("/login");
   }
 
-  const todos = ["This is a todo"];
-
+  const { data: todos } = await supabase
+    .from("todos")
+    .select()
+    .order("inserted_at", { ascending: false });
   return (
     <section className="px-4 py-6 p-5 max-w-6xl mx-auto flex flex-col gap-5">
       {user !== null ? (

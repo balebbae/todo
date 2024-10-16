@@ -51,7 +51,7 @@ export async function signOut() {
   redirect("/login");
 }
 
-export async function oAuthSignIn(provider: Provider) {
+export async function oAuthSignIn(provider: "google") {
   if (!provider) {
     return redirect("/login?message=Invalid provider");
   }
